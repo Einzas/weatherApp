@@ -51,40 +51,42 @@ function App() {
       };
       console.log(response.data.weather[0].main);
       if(response.data.weather[0].main === "Clouds") {
-        setBackground("bg5");
+        setBackground("bg-bg2");
       } else if(response.data.weather[0].main === "Clear") {
-        setBackground("bg2");
+        setBackground("bg-bg1");
       } else if(response.data.weather[0].main === "Rain") {
-        setBackground("rain");
+        setBackground("bg-bg6");
       } else if(response.data.weather[0].main === "Snow") {
-        setBackground("snow");
+        setBackground("bg-bg8");
       } else if(response.data.weather[0].main === "Thunderstorm") {
-        setBackground("thunderstorm");
+        setBackground("bg-bg10");
       } else if(response.data.weather[0].main === "Drizzle") {
-        setBackground("drizzle");
+        setBackground("bg-bg7");
       } else if(response.data.weather[0].main === "Mist") {
-        setBackground("mist");
+        setBackground("bg-bg5");
       } else if(response.data.weather[0].main === "Smoke") {
-        setBackground("smoke");
+        setBackground("bg-bg5");
       } else if(response.data.weather[0].main === "Haze") {
-        setBackground("haze");
+        setBackground("bg-bg5");
       } else if(response.data.weather[0].main === "Dust") {
-        setBackground("dust");
+        setBackground("bg-bg5");
       } else if(response.data.weather[0].main === "Fog") {
-        setBackground("fog");
+        setBackground("bg-bg3");
       } else if(response.data.weather[0].main === "Sand") {
-        setBackground("sand");
+        setBackground("bg-bg2");
       } else if(response.data.weather[0].main === "Ash") {
-        setBackground("ash");
+        setBackground("bg-bg2");
       } else if(response.data.weather[0].main === "Squall") {
-        setBackground("squall");
+        setBackground("bg-bg6");
+      } else{
+        setBackground("bg-bg4");
       }
       setTemp(newTemps);
     });
   }, [coords]);
   return (
     
-    <div className={` App duration-300 ${'bg-'+background} dark:bg-[rgba(0,0,0,0.5)] dark:bg-blend-darken bg-no-repeat bg-cover bg-center px-2 grid place-content-center min-h-screen font-lato`}>
+    <div className={` App duration-300 ${background} dark:bg-[rgba(0,0,0,0.5)] dark:bg-blend-darken bg-no-repeat bg-cover bg-center px-2 grid place-content-center min-h-screen font-lato`}>
       {weather ?  <Weather theme={theme} handleChangeTheme={handleChangeTheme} temp={temp} weather={weather} /> : <Loader />}
     </div>
     
