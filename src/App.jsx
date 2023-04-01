@@ -94,6 +94,11 @@ function App() {
         celsius: (response.data.main.temp - 273.15).toFixed(1),
       };
       handleWeatherBackground(response);
+      if(response.data.sys.sunrise < response.data.dt && response.data.dt < response.data.sys.sunset){
+        setTheme("light")
+      }else{
+        setTheme("dark")
+      }
       setTemp(newTemps);
     });
   }, [coords]);

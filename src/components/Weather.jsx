@@ -30,7 +30,7 @@ const Weather = ({ weather, temp, theme, handleChangeTheme, handleSearchCountry 
         </h2>
 
         <section className="grid gap-4 sm:grid-cols-two ">
-          <article className="grid grid-cols-2 justify-items-center  items-center dark:bg-indigo-800/70 bg-slate-300/40 rounded-3xl">
+          <article className="grid grid-cols-2 justify-items-center  items-center dark:bg-indigo-800/70 bg-slate-300/70 rounded-3xl">
             <h3 className="capitalize py-2 dark:text-white col-start-1 col-end-3">
               {weather.weather[0].description}
             </h3>
@@ -46,7 +46,7 @@ const Weather = ({ weather, temp, theme, handleChangeTheme, handleSearchCountry 
               />
             </div>
           </article>
-          <article className="bg-slate-300/40 p-2 dark:bg-indigo-800/70 justify-center justify-items-stretch py-2 rounded-3xl grid grid-cols-3 sm:grid-cols-1 sm:px-2 sm:py-2 ">
+          <article className="bg-slate-300/70 p-2 dark:bg-indigo-800/70 justify-center justify-items-stretch py-2 rounded-3xl grid grid-cols-3 sm:grid-cols-1 sm:px-2 sm:py-2 ">
             <div className="flex gap-2 text-sm justify-center dark:text-white items-center">
               <div>
                 <img
