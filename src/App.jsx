@@ -22,23 +22,67 @@ function App() {
     setCoords(currentCoords);
   };
 
-
+  const handleSearchCountry = (e) => {
+    e.preventDefault();
+    const URL = `https://api.openweathermap.org/data/2.5/weather?q=${e.target.country.value}&appid=${API_KEY}`;
+    axios.get(URL).then((response) => {
+      setWeather(response.data);
+      const newTemps = {
+        farenheit: ((response.data.main.temp - 273.15) * 1.8 + 32).toFixed(1),
+        celsius: (response.data.main.temp - 273.15).toFixed(1),
+      };
+      setTemp(newTemps);
+      handleWeatherBackground(response);
+    });
+  };
   const handleChangeTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
-  }
-
-
+  };
+  const handleWeatherBackground = (response) => {
+    if (response.data.weather[0].main === "Clouds") {
+      setBackground("bg-bg2");
+    } else if (response.data.weather[0].main === "Clear") {
+      setBackground("bg-bg1");
+    } else if (response.data.weather[0].main === "Rain") {
+      setBackground("bg-bg6");
+    } else if (response.data.weather[0].main === "Snow") {
+      setBackground("bg-bg8");
+    } else if (response.data.weather[0].main === "Thunderstorm") {
+      setBackground("bg-bg10");
+    } else if (response.data.weather[0].main === "Drizzle") {
+      setBackground("bg-bg7");
+    } else if (response.data.weather[0].main === "Mist") {
+      setBackground("bg-bg5");
+    } else if (response.data.weather[0].main === "Smoke") {
+      setBackground("bg-bg5");
+    } else if (response.data.weather[0].main === "Haze") {
+      setBackground("bg-bg5");
+    } else if (response.data.weather[0].main === "Dust") {
+      setBackground("bg-bg5");
+    } else if (response.data.weather[0].main === "Fog") {
+      setBackground("bg-bg3");
+    } else if (response.data.weather[0].main === "Sand") {
+      setBackground("bg-bg2");
+    } else if (response.data.weather[0].main === "Ash") {
+      setBackground("bg-bg2");
+    } else if (response.data.weather[0].main === "Squall") {
+      setBackground("bg-bg6");
+    } else {
+      setBackground("bg-bg4");
+    }
+  };
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success);
   }, []);
 
   useEffect(() => {
-    if(theme === "dark") {
+    if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
   }, [theme]);
+  
 
   useEffect(() => {
     if (!coords) return;
@@ -46,50 +90,29 @@ function App() {
     axios.get(URL).then((response) => {
       setWeather(response.data);
       const newTemps = {
-        farenheit: ((response.data.main.temp - 273.15) * 1.8 +32).toFixed(1),
+        farenheit: ((response.data.main.temp - 273.15) * 1.8 + 32).toFixed(1),
         celsius: (response.data.main.temp - 273.15).toFixed(1),
       };
-      console.log(response.data.weather[0].main);
-      if(response.data.weather[0].main === "Clouds") {
-        setBackground("bg-bg2");
-      } else if(response.data.weather[0].main === "Clear") {
-        setBackground("bg-bg1");
-      } else if(response.data.weather[0].main === "Rain") {
-        setBackground("bg-bg6");
-      } else if(response.data.weather[0].main === "Snow") {
-        setBackground("bg-bg8");
-      } else if(response.data.weather[0].main === "Thunderstorm") {
-        setBackground("bg-bg10");
-      } else if(response.data.weather[0].main === "Drizzle") {
-        setBackground("bg-bg7");
-      } else if(response.data.weather[0].main === "Mist") {
-        setBackground("bg-bg5");
-      } else if(response.data.weather[0].main === "Smoke") {
-        setBackground("bg-bg5");
-      } else if(response.data.weather[0].main === "Haze") {
-        setBackground("bg-bg5");
-      } else if(response.data.weather[0].main === "Dust") {
-        setBackground("bg-bg5");
-      } else if(response.data.weather[0].main === "Fog") {
-        setBackground("bg-bg3");
-      } else if(response.data.weather[0].main === "Sand") {
-        setBackground("bg-bg2");
-      } else if(response.data.weather[0].main === "Ash") {
-        setBackground("bg-bg2");
-      } else if(response.data.weather[0].main === "Squall") {
-        setBackground("bg-bg6");
-      } else{
-        setBackground("bg-bg4");
-      }
+      handleWeatherBackground(response);
       setTemp(newTemps);
     });
   }, [coords]);
   return (
-    
-    <div className={` App duration-300 ${background} dark:bg-[rgba(0,0,0,0.5)] dark:bg-blend-darken bg-no-repeat bg-cover bg-center px-2 grid place-content-center min-h-screen font-lato`}>
-      {weather ?  <Weather theme={theme} handleChangeTheme={handleChangeTheme} temp={temp} weather={weather} /> : <Loader />}
+    <div
+      className={` App duration-300 ${background} dark:bg-[rgba(0,0,0,0.5)] dark:bg-blend-darken bg-no-repeat bg-cover bg-center px-2 grid place-content-center min-h-screen font-lato`}
+    >
+      {weather ? (
+        <Weather
+          theme={theme}
+          handleChangeTheme={handleChangeTheme}
+          temp={temp}
+          weather={weather}
+          handleSearchCountry={handleSearchCountry}
+        />
+      ) : (
+        <Loader />
+      )}
     </div>
-    
   );
 }
 
